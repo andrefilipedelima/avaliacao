@@ -102,7 +102,6 @@ export class UsuariosListaComponent implements OnInit {
     this.router.navigate(['editar', id], { relativeTo: this.route})
   }
 
-
   modalErro(mensagem: string) {
    this.alertService.mostrarAlertErro(mensagem);
   }
