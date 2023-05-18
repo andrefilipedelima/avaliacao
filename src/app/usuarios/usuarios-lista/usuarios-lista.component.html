@@ -1,75 +1,118 @@
 <div class="card mt-3">
-    <div class="card-header">
-      <div class="float-left">
-        <h4>Usuários</h4>
-      </div>
-      <div class="float-right">
-        <button type="button" class="btn btn-secondary mr-1" style="background-color: #9f0931;" [routerLink]="['novo']">Novo Usuário</button>
-        <button type="button" class="btn btn-secondary mr-1" style="background-color: #468be2;" (click)="atualizarLista(paginaAtual)">Atualizar</button>
-        <button type="button" class="btn btn-secondary" style="background-color: #46e29d;" (click)="listarUsuarioCriado()">Consultar Usuários Criados</button>
-      </div>
-
+  <div class="card-header">
+    <div class="float-left">
+      <h4>Usuários</h4>
     </div>
-    <app-paginacao
-    [paginaAtual]="paginaAtual"
-    [limite]="limite"
-    [total]="total"
-    (trocarPagina)="trocarPagina($event)"></app-paginacao>
-    <div class="card-body">
-      <table class="table table-hover" *ngIf="usuarios$ | async as usuarios; else loadingError">
-        <thead>
-          <tr>
-            <th>Foto</th>
-            <th>ID</th>
-            <th>Pronome</th>
-            <th>Nome</th>
-            <th>Sobrenome</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let usuario of usuarios">
-            <td><img src={{usuario.picture}} height="72" width="72"></td>
-            <td>{{usuario.id}}</td>
-            <td>{{usuario.title}}</td>
-            <td>{{usuario.firstName}}</td>
-            <td>{{usuario.lastName}}</td>
-            <td>
-              <span class="float-right">
-               
-                <button class="btn  btn-outline-danger btn-sm mr-1">
-                  Remover
-                </button>
+    <div class="float-right">
+      <button type="button" class="btn btn-secondary mr-1" style="background-color: #9f0931;"
+        [routerLink]="['novo']">Novo Usuário</button>
+      <button type="button" class="btn btn-secondary mr-1" style="background-color: #468be2;"
+        (click)="atualizarLista(paginaAtual)">Todos Usuários</button>
+      <button type="button" class="btn btn-secondary" style="background-color: #46e29d;"
+        (click)="listarUsuarioCriado()">Consultar Usuários Criados</button>
+    </div>
 
-                <button class="btn btn-outline-warning btn-sm">
-                  Editar
-                  </button>
-              </span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-  
-      <ng-template #loading>
+  </div>
+  <app-paginacao *ngIf="!consultaUsuarioCriado" [paginaAtual]="paginaAtual" [limite]="limite" [total]="total"
+    (trocarPagina)="trocarPagina($event)" style="margin: auto;"></app-paginacao>
+  <div class="card-body">
+    <table class="table table-hover" *ngIf="usuarios$ | async as usuarios; else carregarErro">
+      <thead>
+        <tr>
+          <th>Foto</th>
+          <th>ID</th>
+          <th>Pronome</th>
+          <th>Nome</th>
+          <th>Sobrenome</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody *ngIf="usuarios.length > 0; else listaVazia">
+        <tr *ngFor="let usuario of usuarios">
+          <td><img src={{usuario.picture}} height="72" width="72"></td>
+          <td>{{usuario.id}}</td>
+          <td>{{usuario.title}}</td>
+          <td>{{usuario.firstName}}</td>
+          <td>{{usuario.lastName}}</td>
+          <td>
+            <span class="float-right" (click)="modalDetalhes(usuario.id)">
+              <button class="btn btn-outline-info btn-sm mr-1">
+                Detalhes
+              </button>
+
+              <button class="btn btn-outline-warning btn-sm mr-1" (click)="editar(usuario.id)">
+                Editar
+              </button>
+
+              <button class="btn  btn-outline-danger btn-sm" (click)="modalDelete(usuario)">
+                Remover
+              </button>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #carregarErro>
+      <div *ngIf="erro$ | async; else carregar">
+        Erro ao carregar usuários. Tente novamente mais tarde.
+      </div>
+      <ng-template #carregar>
         <span>Carregando Usuários...</span>
       </ng-template>
-  
-      <ng-template #loadingError>
-        <div *ngIf="error$ | async; else loading" >
-          Erro ao carregar usuários. Tente novamente mais tarde.
-        </div>
-        <ng-template #loading>
-            <span>Carregando Usuários...</span>
-        </ng-template>
-      </ng-template>
-    </div>
-    
+    </ng-template>
+
+    <ng-template #listaVazia>
+      <span>Não foi encontrado nenhum usuário.</span>
+    </ng-template>
+
+    <ng-template #erroDetalhes>
+      <span>Não foi possível carregar os detalhes do usuário</span>
+    </ng-template>
+  </div>
+
 </div>
-  
-  <ng-template #deleteModal>
-    <div class="modal-body text-center">
-      <p>Tem certeza que deseja remover esse usuário?</p>
-      <button type="button" class="btn btn-default" >Sim</button>
-      <button type="button" class="btn btn-primary" >Nao</button>
+
+<ng-template #deleteModal>
+  <div class="modal-body text-center">
+    <p>Tem certeza que deseja remover esse usuário?</p>
+    <button type="button" class="btn btn-default" (click)="confirmarDelete()">Sim</button>
+    <button type="button" class="btn btn-primary" (click)="cancelarDelete()">Nao</button>
+  </div>
+</ng-template>
+
+<ng-template #detalhesModal>
+  <div class="modal-body text-center" style="padding:15px 30px">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="fecharModalDetalhes()">
+      <span aria-hidden="true">&times;</span>
+  </button>
+    <p style="font-weight: 600; font-size:larger;">Detalhes do usuário</p>
+    <div class="float-left text-left" style="font-weight: 600; width: 40%;">
+      <p style="height:72px;">Foto</p>
+      <hr/>
+      <p>ID</p>
+      <hr/>
+      <p>Pronome</p>
+      <hr/>
+      <p>Nome</p>
+      <hr/>
+      <p>Sobrenome</p>
+      <hr/>
+      <p>E-mail</p>
     </div>
-  </ng-template>
+    <div class="float-right text-right" style="width: 60%;" *ngIf="usuarioDetalhes$ | async as usuarioDetalhes else erroDetalhes">
+      <p><img src={{usuarioDetalhes.picture}} height="72" width="72"></p>
+      <hr/>
+      <p>{{ usuarioDetalhes.id }}</p>
+      <hr/>
+      <p>{{ usuarioDetalhes.title }}</p>
+      <hr/>
+      <p>{{ usuarioDetalhes.firstName }}</p>
+      <hr/>
+      <p>{{ usuarioDetalhes.lastName }}</p>
+      <hr/>
+      <p>{{ usuarioDetalhes.email }}</p>
+    </div>
+  </div>
+</ng-template>

@@ -10,7 +10,7 @@
                     <div class="invalid-feedback" *ngIf="verificarErros('foto')">Endereço inválido</div>
 
                     <label for="pronome">Pronome</label>
-                    <input type="text" class="form-control" id="pronome" placeholder="Pronome de Tratamento" formControlName="pronome"
+                    <input type="text" class="form-control" id="pronome" placeholder="Exemplo: mr, ms, mrs, miss, dr" formControlName="pronome"
                         pattern="[a-zA-Z ]*" [ngClass]="{'is-invalid': enviado && verificarErros('pronome')}" />
                     <div class="invalid-feedback" *ngIf="verificarErros('pronome')">Pronome inválido</div>
 
@@ -31,8 +31,8 @@
                 </div>
 
                 <div style="margin-top: 10px">
-                    <button type="submit" class="btn btn-primary" (click)="salvar()">Salvar</button>
-                    <button type="submit" class="btn btn-default" (click)="cancelar()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary mr-1" (click)="salvar()">Salvar</button>
+                    <button type="submit" class="btn btn-default" (click)="cancelar()" *ngIf="!form.controls['id'].value">Cancelar</button>
                 </div>
             </form>
         </div>

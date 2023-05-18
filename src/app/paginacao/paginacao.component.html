@@ -1,8 +1,0 @@
-<ul class="paginacao">
-    <li *ngFor="let pagina of paginas" 
-        [ngClass]="{'pagina-item': true, active: paginaAtual === pagina }"
-        (click)="trocarPagina.emit(pagina)">
-        <span class="pagina-link">{{pagina}}</span>
-    </li>
-
-</ul>

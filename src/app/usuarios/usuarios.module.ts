@@ -5,8 +5,7 @@ import { UsuariosRoutingModule } from './usuarios-routing.module';
 import { UsuariosListaComponent } from './usuarios-lista/usuarios-lista.component';
 import { UsuariosFormComponent } from './usuarios-form/usuarios-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PaginacaoModule } from '../paginacao/paginacao.module';
-
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +16,7 @@ import { PaginacaoModule } from '../paginacao/paginacao.module';
     CommonModule,
     UsuariosRoutingModule,
     ReactiveFormsModule,
-    PaginacaoModule
+    SharedModule
   ]
 })
 export class UsuariosModule { }

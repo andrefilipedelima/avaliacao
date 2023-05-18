@@ -6,8 +6,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./paginacao.component.scss']
 })
 export class PaginacaoComponent implements OnInit{
-   @Input() paginaAtual: number = 1;
-   @Input() limite: number = 20;
+   @Input() paginaAtual: number = 0;
+   @Input() limite: number = 0;
    @Input() total: number = 0;
    @Output() trocarPagina = new EventEmitter<number>();
 
