@@ -1,0 +1,54 @@
+.paginacao {
+    display: inline-block;
+    padding-left: 0;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.25rem;
+  }
+  .pagina-item {
+    display: inline;
+  }
+  .pagina-item:first-child .pagina-link {
+    margin-left: 0;
+    border-bottom-left-radius: 0.25rem;
+    border-top-left-radius: 0.25rem;
+  }
+  .pagina-item:last-child .pagina-link {
+    border-bottom-right-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+  }
+  .pagina-item.active .pagina-link,
+  .pagina-item.active .pagina-link:focus,
+  .pagina-item.active .pagina-link:hover {
+    z-index: 2;
+    color: #fff;
+    cursor: default;
+    background-color: #5cb85c;
+    border-color: #5cb85c;
+  }
+  .pagina-item.disabled .pagina-link,
+  .pagina-item.disabled .pagina-link:focus,
+  .pagina-item.disabled .pagina-link:hover {
+    color: #818a91;
+    pointer-events: none;
+    cursor: not-allowed;
+    background-color: #fff;
+    border-color: #ddd;
+  }
+  .pagina-link {
+    position: relative;
+    float: left;
+    padding: 0.5rem 0.75rem;
+    margin-left: -1px;
+    color: #5cb85c;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    cursor: pointer;
+  }
+  .pagina-link:focus,
+  .pagina-link:hover {
+    color: #3d8b3d;
+    background-color: #eceeef;
+    border-color: #ddd;
+  }

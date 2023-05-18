@@ -1,0 +1,75 @@
+<div class="card mt-3">
+    <div class="card-header">
+      <div class="float-left">
+        <h4>Usuários</h4>
+      </div>
+      <div class="float-right">
+        <button type="button" class="btn btn-secondary mr-1" style="background-color: #9f0931;" [routerLink]="['novo']">Novo Usuário</button>
+        <button type="button" class="btn btn-secondary mr-1" style="background-color: #468be2;" (click)="atualizarLista(paginaAtual)">Atualizar</button>
+        <button type="button" class="btn btn-secondary" style="background-color: #46e29d;" (click)="listarUsuarioCriado()">Consultar Usuários Criados</button>
+      </div>
+
+    </div>
+    <app-paginacao
+    [paginaAtual]="paginaAtual"
+    [limite]="limite"
+    [total]="total"
+    (trocarPagina)="trocarPagina($event)"></app-paginacao>
+    <div class="card-body">
+      <table class="table table-hover" *ngIf="usuarios$ | async as usuarios; else loadingError">
+        <thead>
+          <tr>
+            <th>Foto</th>
+            <th>ID</th>
+            <th>Pronome</th>
+            <th>Nome</th>
+            <th>Sobrenome</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let usuario of usuarios">
+            <td><img src={{usuario.picture}} height="72" width="72"></td>
+            <td>{{usuario.id}}</td>
+            <td>{{usuario.title}}</td>
+            <td>{{usuario.firstName}}</td>
+            <td>{{usuario.lastName}}</td>
+            <td>
+              <span class="float-right">
+               
+                <button class="btn  btn-outline-danger btn-sm mr-1">
+                  Remover
+                </button>
+
+                <button class="btn btn-outline-warning btn-sm">
+                  Editar
+                  </button>
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  
+      <ng-template #loading>
+        <span>Carregando Usuários...</span>
+      </ng-template>
+  
+      <ng-template #loadingError>
+        <div *ngIf="error$ | async; else loading" >
+          Erro ao carregar usuários. Tente novamente mais tarde.
+        </div>
+        <ng-template #loading>
+            <span>Carregando Usuários...</span>
+        </ng-template>
+      </ng-template>
+    </div>
+    
+</div>
+  
+  <ng-template #deleteModal>
+    <div class="modal-body text-center">
+      <p>Tem certeza que deseja remover esse usuário?</p>
+      <button type="button" class="btn btn-default" >Sim</button>
+      <button type="button" class="btn btn-primary" >Nao</button>
+    </div>
+  </ng-template>

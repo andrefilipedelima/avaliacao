@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col col-lg-6">
+            <form class="needs-validation" novalidate [formGroup]="form" style="padding-top: 10px">
+                <div class="form-row">
+
+                    <label for="foto">Foto</label>
+                    <input type="text" class="form-control" id="foto" placeholder="Exemplo: https://randomuser.me/api/portraits/men/88.jpg" formControlName="foto"
+                         [ngClass]="{'is-invalid': enviado && verificarErros('foto')}" />
+                    <div class="invalid-feedback" *ngIf="verificarErros('foto')">Endereço inválido</div>
+
+                    <label for="pronome">Pronome</label>
+                    <input type="text" class="form-control" id="pronome" placeholder="Pronome de Tratamento" formControlName="pronome"
+                        pattern="[a-zA-Z ]*" [ngClass]="{'is-invalid': enviado && verificarErros('pronome')}" />
+                    <div class="invalid-feedback" *ngIf="verificarErros('pronome')">Pronome inválido</div>
+
+                    <label for="nome">Nome</label>
+                    <input type="text" class="form-control" id="nome" placeholder="Primeiro Nome" formControlName="nome"
+                        pattern="[a-zA-Z ]*" [ngClass]="{'is-invalid': enviado && verificarErros('nome')}" />
+                    <div class="invalid-feedback" *ngIf="verificarErros('nome')">Nome inválido</div>
+
+                    <label for="sobrenome">Sobrenome</label>
+                    <input type="text" class="form-control" id="nome" placeholder="Sobrenome" formControlName="sobrenome"
+                        pattern="[a-zA-Z ]*" [ngClass]="{'is-invalid': enviado && verificarErros('sobrenome')}" />
+                    <div class="invalid-feedback" *ngIf="verificarErros('sobrenome')">Sobrenome inválido</div>
+
+                    <label for="email">E-mail</label>
+                    <input type="text" class="form-control" id="nome" placeholder="E-mail" formControlName="email"
+                         [ngClass]="{'is-invalid': enviado && verificarErros('email')}" />
+                    <div class="invalid-feedback" *ngIf="verificarErros('email')">E-mail inválido</div>
+                </div>
+
+                <div style="margin-top: 10px">
+                    <button type="submit" class="btn btn-primary" (click)="salvar()">Salvar</button>
+                    <button type="submit" class="btn btn-default" (click)="cancelar()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
