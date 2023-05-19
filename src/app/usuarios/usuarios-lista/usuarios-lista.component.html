@@ -4,17 +4,17 @@
       <h4>Usuários</h4>
     </div>
     <div class="float-right">
-      <button type="button" class="btn btn-secondary mr-1" style="background-color: #9f0931;"
+      <button type="button" class="btn btn-secondary mr-1 novo-botao" 
         [routerLink]="['novo']">Novo Usuário</button>
-      <button type="button" class="btn btn-secondary mr-1" style="background-color: #468be2;"
+      <button type="button" class="btn btn-secondary mr-1 todos-botao"
         (click)="atualizarLista(paginaAtual)">Todos Usuários</button>
-      <button type="button" class="btn btn-secondary" style="background-color: #46e29d;"
+      <button type="button" class="btn btn-secondary consultar-botao"
         (click)="listarUsuarioCriado()">Consultar Usuários Criados</button>
     </div>
 
   </div>
-  <app-paginacao *ngIf="!consultaUsuarioCriado" [paginaAtual]="paginaAtual" [limite]="limite" [total]="total"
-    (trocarPagina)="trocarPagina($event)" style="margin: auto;"></app-paginacao>
+  <app-paginacao class="m-auto" *ngIf="!consultaUsuarioCriado" [paginaAtual]="paginaAtual" [limite]="limite" [total]="total"
+    (trocarPagina)="trocarPagina($event)"></app-paginacao>
   <div class="card-body">
     <table class="table table-hover" *ngIf="usuarios$ | async as usuarios; else carregarErro">
       <thead>
@@ -83,13 +83,13 @@
 </ng-template>
 
 <ng-template #detalhesModal>
-  <div class="modal-body text-center" style="padding:15px 30px">
+  <div class="modal-body text-center padding-modal" >
     <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="fecharModalDetalhes()">
       <span aria-hidden="true">&times;</span>
   </button>
-    <p style="font-weight: 600; font-size:larger;">Detalhes do usuário</p>
-    <div class="float-left text-left" style="font-weight: 600; width: 40%;">
-      <p style="height:72px;">Foto</p>
+    <p class="texto-titulo-modal">Detalhes do usuário</p>
+    <div class="float-left text-left texto-descricao-modal">
+      <p class="foto-modal">Foto</p>
       <hr/>
       <p>ID</p>
       <hr/>
@@ -101,7 +101,7 @@
       <hr/>
       <p>E-mail</p>
     </div>
-    <div class="float-right text-right" style="width: 60%;" *ngIf="usuarioDetalhes$ | async as usuarioDetalhes else erroDetalhes">
+    <div class="float-right text-right texto-valor-modal"  *ngIf="usuarioDetalhes$ | async as usuarioDetalhes else erroDetalhes">
       <p><img src={{usuarioDetalhes.picture}} height="72" width="72"></p>
       <hr/>
       <p>{{ usuarioDetalhes.id }}</p>
